@@ -1,14 +1,19 @@
 <?php
+/**
+ * fonction qui permet de générer des groupes de personnes en fonction de leurs niveau (de 1 à 5), selon un tableau associatif renseigné en argument.
+ *
+ * @param array $arrayStudents
+ * @return array
+ */
 
-// une fonction qui permet de générer des groupes de 2/3 personnes en fonction de leurs niveau (de 1 à 5), selon un tableau associatif renseigné en arguments.
 
 function groupGenerator($arrayStudents){
     // calculer la médiane du niveau des élèves de la promo (elle sera arrondi à l'inférieur pour éviter d'avoir une médiane à 5 si une excellente promo).
     $medianPromo = calculMedian($arrayStudents);
     $underMedian = [];
-    $egalMedian = [];
+    $equaMedian = [];
     $aboveMedian = [];
-
+    $listStudientsgroups = [];
 
     // On catégorise les étudiants en fonction de leurs niveau.
     for($index = 0; $index < count($arrayStudents); $index++){
@@ -20,7 +25,7 @@ function groupGenerator($arrayStudents){
             $underMedian[] = $arrayStudents[$index];
         }
         else{
-            $egalMedian[] = $arrayStudents[$index];
+            $equaMedian[] = $arrayStudents[$index];
         }
     }
 
@@ -30,86 +35,51 @@ function groupGenerator($arrayStudents){
         // Génération d'un nombre de variable égale au nombre de groupe dont on a besoin.
         $numberGroupsNeeded = count($arrayStudents) / 2;
         $listStudientsgroups = createGroups($numberGroupsNeeded);
-        
-        // Dans le cas où il y a autant d'élèves au dessus et en dessous de la médiane.
-        if(count($aboveMedian) === count($underMedian)){
-             // Un élève au dessus de la médiane dans chaque groupe. On complète avec les élèves en dessous de la médiane.
-            $listStudientsgroups = dispatchStudients($listStudientsgroups, $aboveMedian, 1);
-            $listStudientsgroups = dispatchStudients($listStudientsgroups, $underMedian, 1);
-            return $$listStudientsgroups;
-        }
-        // Le cas où il y a plus d'élèves au dessus qu'en en dessous de la médiane ne peut pas arrivé.
-        // Dans le cas où il y a moins d'élèves au dessus qu'en en dessous de la médiane.
-        else{
-            $numberOfGroup = (count($arrayStudents) / 2);
-
-            // Dans le cas où il y a autant d'élèves au dessus de la médiane que de groupes créés.
-            if(count($aboveMedian) === $numberOfGroup){
-
-                // Un élève au dessus de la médiane dans chaque groupe. On complète avec les élèves en dessous de la médiane. On reprends à groupe = nombre d'élèves en dessous de la médiane + 1 avec les élèves au niveau de la médiane.
-                $listStudientsgroups = dispatchStudients($listStudientsgroups, $aboveMedian, 1);
-                $listStudientsgroups = dispatchStudients($listStudientsgroups, $underMedian, 1);
-                $listStudientsgroups = dispatchStudients($listStudientsgroups, $egaleMedian, count($underMedian) + 1);
-
-                return $listStudientsgroups; 
-            }
-            // Dans le cas où il y a moins de personnes au dessus de la médiane que de groupes créés.
-            else {
-                $listStudientsgroups = dispatchStudients($listStudientsgroups, $aboveMedian, 1);
-                $listStudientsgroups = dispatchStudients($listStudientsgroups, $underMedian, 1);
-                // S'il y a moins d'élèves égale à la médiane qu'en dessous ---> On reprend la répartition après le dernier élève au dessus de la médiane.
-                if (count($egaleMedian) <= count($underMedian)) {
-                    $listStudientsgroups = dispatchStudients($listStudientsgroups, $egaleMedian, count($aboveMedian) + 1);
-                }
-                // S'il y a plus d'élèves égale à la médiane qu'en dessous ---> On reprend la répartition après le dernier élève en dessous de la médiane.
-                else{
-                    $listStudientsgroups = dispatchStudients($listStudientsgroups, $egaleMedian, count($underMedian) + 1);
-                }
-
-                return $listStudientsgroups; 
-            }
-        }
     }
     // Dans le cas où le nombre d'étudiant est impair.
     else {
-        // (count($arrayStudents) - 3) / 2 ---> groupes de 2 élèves + 1 groupe de 3 élèves.
+        // On soustrait 3 au total des élèves (pour un groupe de 3), on divise le reste par deux pour des groupes de 2.
+        echo "Dans le else , impair";
         $numberGroupsNeeded = (count($arrayStudents) - 3) / 2 + 1;
+        var_dump($numberGroupsNeeded);
         $listStudientsgroups = createGroups($numberGroupsNeeded);
-
     }
-    // Savoir si le nombre d'élève est pair ou impair --> que des groupes de 2 ou un groupe de 3.
-        // Si nombre pair --> nombre de groupe = nombre élèves / 2
-        // Si nombre impair --> nombre de groupe = (nombre élèves -3) / 2 + 1
-        // Et si nombre impair ---> de préférence il faut que le groupe de 3 soit constitué de 3 élèves avec un niveau égale à la médiane;
+    var_dump($listStudientsgroups);
+    // Les élèves au dessus de la médiane sont dispatchés.
+    $listStudientsgroups = dispatchStudientsInGroup($listStudientsgroups, $aboveMedian, 1);
+    // Les élèves en dessous de la médiane sont dispatchés.
+    $listStudientsgroups = dispatchStudientsInGroup($listStudientsgroups, $underMedian, 1);
+    // On complète les groupes avec le reste des élèves.
 
+    // Trouver l'index du premier groupe à 1 élève.
+    // Commence l'ajout des derniers élèves à partir de ce groupe.
+    // Tant qu'un groupe n'est pas plein, on ne passe pas au suivant.
 
-    // Créer un nombre de variable égale au nombre de groupe, avec comme valeur un tableau vide.
+    for($groupe = 0; $groupe < count($listStudientsgroups); $groupe++){
+        while(count($listStudientsgroups[$groupe]) < 2){
 
-    // boucler sur le tableau renseigné en argument lors de l'appel de la fonction.
-        // trier dans 3 variables différentes, les élèves en fonction de leurs niveau:
-            // -les élèves au dessus de la médiane.
-            // -les élèves en dessous de la médiane.
-            // -les élèves égale à la médiane.
+            $indexRandomStudent = array_rand($equaMedian, 1);
 
-        // les possibilitée d'affectations des élèves dans les groupes:
-            
-            // nombre impair:
-                // la variable avec niveau élève = médiane contient 3 élèves ---> c'est le groupe de 3.
-                // la variable avec niveau élève = médiane contient plus que 3 élèves ---> groupe de 3 constitué aléatoirement.
-                // la variable avec niveau élève = médiane contient moins que 3 élèves ---> groupe de 3 constitué avec le ou les 2 élèves puis complété avec le dernier élève qu'il restera après les affectations dans tout les groupes.
+            $listStudientsgroups[$groupe][] = $equaMedian[$indexRandomStudent];
 
-            // nombre pair: 
-                // si élève > médianne et élève < médianne contiennes le même nombre d'élèves ---> 1 de chaque tableau dans chaque groupe.
-                // si nombre (élève > médiane) est > à (élève < médiane):
-                    // nouvelle médiane sur le tableau des élèves > médiane pour éviter que les meilleurs de la promo se retrouve ensemble.
-                    // A partir de cette nouvelle médiane ---> tout les élèves au dessus vont dans des groupes différents, le reste est attribuer aléatoirement.
-                // si nombre (élève > médiane) est > à (élève < médiane)  ---> 1 élève > médianne dans chaque groupe.
+            array_splice($equaMedian, $indexRandomStudent, 1);
+        }
+    }
 
+    if(count($equaMedian) === 1){
+        $listStudientsgroups[count($listStudientsgroups) - 1][] = $equaMedian[0];
+    }
 
-
+    return $listStudientsgroups;
 }
 
-// Créer le nombre de groupe nécessaire.
+/**
+ * Créer le nombre de groupe nécessaire.
+ *
+ * @param int $numberOfGroup
+ * @return array
+*/
+
 function createGroups($numberOfGroup){
     $listOfGroups = [];
     for($index = 0; $index < $numberOfGroup; $index++){
@@ -119,8 +89,16 @@ function createGroups($numberOfGroup){
     return $listOfGroups;
 }
 
-// Dispatche aléatoirement les élèves d'une catégorie dans des groupes différents.
-function dispatchStudients($arrayGroups, $category, $groupToStart){
+/**
+ * Dispatche aléatoirement les élèves d'une catégorie dans des groupes différents.
+ *
+ * @param array $arrayGroups
+ * @param array $category
+ * @param int $groupToStart
+ * @return array
+ */
+
+function dispatchStudientsInGroup($arrayGroups, $category, $groupToStart){
     // La boucle commence à "$groupToStart", il faut donc rajouter "$groupToStart" à count($category) pour parcourir tout le tableau.
     $loopNeeded = count($category) + $groupToStart;
     for ($student = $groupToStart; $student < $loopNeeded; $student++) {
@@ -137,7 +115,14 @@ function dispatchStudients($arrayGroups, $category, $groupToStart){
     return $arrayGroups;
 }
 
-// Vérifie si le tableau est ordonné dans l'ordre croissant.
+
+/**
+ * Vérifie si le tableau est ordonné dans l'ordre croissant.
+ *
+ * @param array $array
+ * @return bool
+ */
+
 function checkOrderArray($array){
     // Comparaison d'une valeur avec celle qui la précède. Empêche la boucle de sortir du tableau. Il faut donc commencer à l'indice 1.
     for($index = 1; $index < count($array); $index++){
@@ -155,8 +140,13 @@ function checkOrderArray($array){
     return true;
 }
 
+/**
+ * Réorganise le tableau dans l'ordre croissant.
+ *
+ * @param array $arrayToOrder
+ * @return array
+ */
 
-// Réorganise le tableau dans l'ordre croissant.
 function toOrderArray($arrayToOrder){
 
     while(!checkOrderArray($arrayToOrder)){
@@ -175,7 +165,14 @@ function toOrderArray($arrayToOrder){
     return $arrayToOrder;
 }
 
-// Calcul de la médiane
+
+/**
+ * Calcul de la médiane
+ *
+ * @param array $array
+ * @return float
+ */
+
 function calculMedian($array){
     // Dans le cas ou le nombre de valeur dans le tableau est pair
     if(count($array) % 2 === 0){
@@ -219,37 +216,42 @@ function calculMedian($array){
 
 
 
-// $arrayStudents = [
+$arrayStudents = [
+    ["actualLevel" => 1],
+    ["actualLevel" => 1],
+    ["actualLevel" => 1],
+    ["actualLevel" => 1],
+    ["actualLevel" => 1],
+    ["actualLevel" => 1],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 3],
+    ["actualLevel" => 5],
+    ["actualLevel" => 5],
+    ["actualLevel" => 5],
+    ["actualLevel" => 5],
+    ["actualLevel" => 5]
+];
+
+// $underMedian = [
 //     ["actualLevel" => 1],
-//     ["actualLevel" => 8],
-//     ["actualLevel" => 4],
-//     ["actualLevel" => 2],
-//     ["actualLevel" => 12],
-//     ["actualLevel" => 6]
+//     ["actualLevel" => 1],
+//     ["actualLevel" => 1]
 // ];
 
-$underMedian = [
-    ["actualLevel" => 1],
-    ["actualLevel" => 2],
-    ["actualLevel" => 4]
-];
+// $egaleMedian = [
+//     ["actualLevel" => 3],
+//     ["actualLevel" => 3],
+//     ["actualLevel" => 3]
+// ];
 
-$aboveMedian = [
-    ["actualLevel" => 6],
-    ["actualLevel" => 8],
-    ["actualLevel" => 12]
-];
-
-// var_dump($group1);
-// var_dump($group2);
-// var_dump($group3);
-
-
-$result5 = createGroups(5);
-$test = dispatchStudients($result5,$underMedian, 2);
-$test2 = dispatchStudients($test,$aboveMedian, 2);
-
-var_dump($result5);
-var_dump($test);
-var_dump($test2);
-
+// $aboveMedian = [
+//     ["actualLevel" => 5]
+// ];
+var_dump(count($arrayStudents));
+var_dump(groupGenerator($arrayStudents));
