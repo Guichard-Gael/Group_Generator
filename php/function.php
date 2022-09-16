@@ -66,6 +66,7 @@ function groupGenerator($arrayStudents){
         }
     }
 
+    // S'il reste 1 élève, on le rajoute dans le dernier groupe.
     if(count($equaMedian) === 1){
         $listStudientsgroups[count($listStudientsgroups) - 1][] = $equaMedian[0];
     }
@@ -193,28 +194,6 @@ function calculMedian($array){
     }
 }
 
-// $test = [
-//     ["actualLevel" => 1],
-//     ["actualLevel" => 8],
-//     ["actualLevel" => 4],
-//     ["actualLevel" => 2],
-//     ["actualLevel" => 12],
-//     ["actualLevel" => 6],
-//     ["actualLevel" => 13]
-// ];
-
-// $test2 = [
-//     ["actualLevel" => 1],
-//     ["actualLevel" => 2],
-//     ["actualLevel" => 4],
-//     ["actualLevel" => 6],
-//     ["actualLevel" => 8],
-//     ["actualLevel" => 12],
-//     ["actualLevel" => 13]
-// ];
-
-
-
 
 $arrayStudents = [
     ["actualLevel" => 1],
@@ -238,20 +217,5 @@ $arrayStudents = [
     ["actualLevel" => 5]
 ];
 
-// $underMedian = [
-//     ["actualLevel" => 1],
-//     ["actualLevel" => 1],
-//     ["actualLevel" => 1]
-// ];
-
-// $egaleMedian = [
-//     ["actualLevel" => 3],
-//     ["actualLevel" => 3],
-//     ["actualLevel" => 3]
-// ];
-
-// $aboveMedian = [
-//     ["actualLevel" => 5]
-// ];
 var_dump(count($arrayStudents));
 var_dump(groupGenerator($arrayStudents));
