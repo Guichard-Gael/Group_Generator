@@ -1,0 +1,118 @@
+/* General */
+body{
+    height: 100vh;
+    color: #EDEDED;
+    background-image: 
+        radial-gradient(circle at 99% 33%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 37%, transparent 37%, transparent 100%),
+        radial-gradient(circle at 46% 16%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 43%,transparent 43%, transparent 100%),
+        radial-gradient(circle at 99% 25%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 22%,transparent 22%, transparent 100%),
+        radial-gradient(circle at 57% 88%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 86%,transparent 86%, transparent 100%),
+        radial-gradient(circle at 82% 78%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 22%,transparent 22%, transparent 100%),
+        linear-gradient(90deg, rgb(0,0,0),rgb(0,0,0));
+}
+
+/* Form */
+
+.container-form {
+    width: 80%;
+    padding: 1rem;
+    font-size: 1.5rem;
+    background-color: rgba(237,237,237,0.1);
+    border-radius: 0.2rem;
+    /* box-shadow: rgba(219, 218, 218, 0.89) 0px 5px 15px; */
+    box-shadow: -2px 8px 38px -9px #EDEDED;
+    margin: 1rem auto;
+}
+form {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: repeat(2,1fr);
+}
+
+form .container-form-data{
+    grid-row-start: 2;
+}
+
+.container-form-data,
+.container-form-group{
+    padding: 0.5rem 0 0.5rem 1rem;
+}
+
+label{
+    margin-right: 0.5rem;
+}
+
+input[type="number"] {
+    border-radius: 0.3rem;
+}
+
+input[type="file"] {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+input[type="file"]:hover{
+    background-color: #990F02;
+}
+
+.button-file{
+    background-color: #990F02;
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.2rem;
+}
+
+.button-file:hover{
+    cursor: pointer;
+}
+
+button{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 80%;
+    height: 80%;
+    align-self: center;
+    justify-self: center;
+    border-radius: 0.5rem;
+    border: none;
+    transition: background-color 1.5s, color 0.5s;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #990F02;
+    color: #FFF;
+    transition: background-color 1.5s, color 1s;
+}
+button:active{
+    width: 70%;
+    height: 70%;
+}
+
+input:focus {
+    border: 2px solid #990F02;
+    outline: none;
+}
+
+/* Table */
+table{
+    font-size: 2rem;
+    margin: 5rem auto;
+    padding: 1rem;
+    box-shadow: -2px 8px 38px -9px #EDEDED;
+    text-align: center;
+    border-collapse: collapse;
+}
+td{
+    padding: 0.5rem 1rem;
+    border-bottom: 4px solid #EDEDED;
+}
+
+thead th{
+    padding: 0.5rem 1rem ;
+}
