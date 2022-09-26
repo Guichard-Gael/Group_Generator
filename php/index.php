@@ -10,10 +10,11 @@
 </head>
 <body>
     <div class="container-form">
+        <a href="genpdf.php">Générer un PDF</a>
         <form method="POST" enctype="multipart/form-data">
             <div class="container-form-group">
-                <label for="inGroup">Combien de personnes par groupe ?</label>
-                <input type="number" name="inGroup" id="inGroup">
+                <label for="perGroup">Combien de personnes par groupe ?</label>
+                <input type="number" name="perGroup" id="perGroup">
             </div>
             <div class="container-form-data">
                 <label for="data">Importez votre fichier de données :</label>
@@ -23,48 +24,46 @@
             <button>Envoyer</button>
         </form>
     </div>
+    <section class="container-list-groups">
+        <?php
+            include('functions/groups.php');
+
+            $json = file_get_contents('../data.json');
+            $json2 = json_decode($json, true);
+            $numberGroup = intval($_POST["perGroup"]);
+            $students = groupGenerator($json2, $numberGroup);
+            
+            foreach($students as $index => $student):
+        ?>
+        <div class="container-group">
+            <div class="number-of-group"><p>Groupe <?= $index + 1 ?></p></div>
+            <?php
+                for ($index=0; $index < count($student); $index++):          
+            ?>
+            <p class="people"><?= $student[$index]['prénom']. " ". $student[$index]['nom'] ?></p>
+            <?php
+                endfor;
+            ?>
+        </div>
+        <?php
+            endforeach;
+        ?>
+    </section>
+
 </body>
 </html>
 
 <?php 
 
-if(isset($_POST)){
-    
-    $maxSize = 50000;
-    $validExt = ".json";
-    
-    if($_FILES["fileUploaded"]["error"] > 0){
-        
-        echo "Une erreur est survenue.";
-        die;
-    }
-    
-    $fileSize = $_FILES['fileUploaded']['size'];
-    
-    if($fileSize > $maxSize){
-        echo "Le fichier est trop lourd.";
-        die;
-    }
-    var_dump($_FILES);
 
-    $fileName = $_FILES['fileUploaded']['name'];
-    $fileExt = ".".strtolower(substr(strrchr($fileName, '.'), 1));
-    var_dump($fileExt);
+// echo "<pre>";
+// var_dump($json2[0]["nom"]);
+// echo "<pre>";
 
-    if ($fileExt !== $validExt) {
-        echo "Le fichier n'est pas au format json.";
-        die;
-    }
-
-    $tmpName = $_FILES['fileUploaded']['tmp_name'];
-    $uniqueName = md5(uniqid(rand(), true));
-    $pathDirectoryFileUploaded = "upload/" . $uniqueName . $fileExt;
-    var_dump($pathDirectoryFileUploaded);
-    $resultUpload = move_uploaded_file($tmpName, $pathDirectoryFileUploaded);
-    if($resultUpload){
-        echo "Transfert terminé !";
-    }
-}
+// $json = file_get_contents($_FILES["../data.json"]);
+// echo "<pre>";
+// var_dump(json_decode($json));
+// echo "<pre>";
 
 
 ?>
