@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container-form">
+        <a href="genpdf.php">Générer un PDF</a>
         <form method="POST" enctype="multipart/form-data">
             <div class="container-form-group">
                 <label for="perGroup">Combien de personnes par groupe ?</label>
@@ -23,37 +24,32 @@
             <button>Envoyer</button>
         </form>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Groupe n°</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-            </tr>
-        </thead>
-        <tbody>
-
+    <section class="container-list-groups">
         <?php
-            include('functions/function.php');
+            include('functions/groups.php');
+
             $json = file_get_contents('../data.json');
             $json2 = json_decode($json, true);
             $numberGroup = intval($_POST["perGroup"]);
             $students = groupGenerator($json2, $numberGroup);
-
-            foreach($students as $student):
+            
+            foreach($students as $index => $student):
+        ?>
+        <div class="container-group">
+            <div class="number-of-group"><p>Groupe <?= $index + 1 ?></p></div>
+            <?php
                 for ($index=0; $index < count($student); $index++):          
             ?>
-            <tr>
-                <td class="groupe<?= $student[$index]["groupe"] ?>"><?= $student[$index]["groupe"] ?></td>
-                <td class="groupe<?= $student[$index]["groupe"] ?>"><?= $student[$index]["prénom"] ?></td>
-                <td class="groupe<?= $student[$index]["groupe"] ?>"><?= $student[$index]["nom"] ?></td>
-            </tr>
+            <p class="people"><?= $student[$index]['prénom']. " ". $student[$index]['nom'] ?></p>
             <?php
                 endfor;
-            endforeach;
             ?>
-        </tbody>
-    </table>
+        </div>
+        <?php
+            endforeach;
+        ?>
+    </section>
+
 </body>
 </html>
 

@@ -1,6 +1,12 @@
-/* General */
+/*
+----------------------------------
+            General
+---------------------------------
+*/
+
 body{
     height: 100vh;
+    font-family: Arial, "sans-serif";
     color: #EDEDED;
     background-image: 
         radial-gradient(circle at 99% 33%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 37%, transparent 37%, transparent 100%),
@@ -9,19 +15,24 @@ body{
         radial-gradient(circle at 57% 88%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 86%,transparent 86%, transparent 100%),
         radial-gradient(circle at 82% 78%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 22%,transparent 22%, transparent 100%),
         linear-gradient(90deg, rgb(0,0,0),rgb(0,0,0));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-/* Form */
+/*
+----------------------------------
+            Form
+---------------------------------
+*/
 
 .container-form {
     width: 80%;
+    margin: 1rem auto 5rem auto;
     padding: 1rem;
     font-size: 1.5rem;
     background-color: rgba(237,237,237,0.1);
     border-radius: 0.2rem;
-    /* box-shadow: rgba(219, 218, 218, 0.89) 0px 5px 15px; */
     box-shadow: -2px 8px 38px -9px #EDEDED;
-    margin: 1rem auto;
 }
 form {
     display: grid;
@@ -72,16 +83,17 @@ input[type="file"]:hover{
 }
 
 button{
-    grid-row-start: 1;
-    grid-row-end: 3;
     width: 80%;
     height: 80%;
     align-self: center;
     justify-self: center;
-    border-radius: 0.5rem;
+    grid-row-start: 1;
+    grid-row-end: 3;
     border: none;
-    transition: background-color 1.5s, color 0.5s;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    transition: background-color 1.5s, color 0.5s;
 }
 
 button:hover{
@@ -99,20 +111,105 @@ input:focus {
     outline: none;
 }
 
-/* Table */
-table{
-    font-size: 2rem;
-    margin: 5rem auto;
-    padding: 1rem;
-    box-shadow: -2px 8px 38px -9px #EDEDED;
+/*
+----------------------------------
+            List of groups
+---------------------------------
+*/
+
+.container-list-groups{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     text-align: center;
-    border-collapse: collapse;
+    font-size: 1.5rem;
 }
-td{
-    padding: 0.5rem 1rem;
-    border-bottom: 4px solid #EDEDED;
+.container-group{
+    min-width: 30%;
+    margin: 1rem;
+    box-shadow: -2px 8px 38px -9px #EDEDED;
+    border-radius: 0.5rem;
 }
 
-thead th{
-    padding: 0.5rem 1rem ;
+.number-of-group{
+    font-size: 2rem;
+    color: #990F02;
 }
+
+/*
+----------------------------------
+            Media query
+---------------------------------
+*/
+
+@media screen and (max-width : 1020px){
+
+    form {
+        grid-template-rows: repeat(3,1fr);
+        grid-template-columns: 100%;
+        justify-content: center;
+    }
+
+    form > * {
+        align-self: center;
+        justify-self: center;
+        margin: 0.5rem;
+    }
+
+    button{
+        width: 50%;
+        grid-row-start: 3;
+        grid-row-end: 4;
+    }
+
+    .container-group{
+        width: 45%;
+    }
+}
+
+@media screen and (max-width : 980px){
+    .container-group{
+        min-width: 30%;
+    }
+}
+
+@media screen and (max-width : 785px) {
+    
+    button {
+        font-size: 1rem;
+    }
+    .container-form-data,
+    .container-form-group{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .container-list-groups{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container-group{
+        width: 90%;
+    }
+}
+
+
+@media screen and (max-width : 500px) {
+
+    div label{
+        font-size: 1rem;
+    }
+    
+    button{
+        width: 80%;
+    }
+
+    .container-group{
+        width: 90%;
+    }
+}
+
