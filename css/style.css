@@ -3,9 +3,14 @@
             General
 ---------------------------------
 */
+* {
+    box-sizing: border-box;
+}
 
 body{
     height: 100vh;
+    margin: 0;
+    padding-top: 1rem;
     font-family: Arial, "sans-serif";
     color: #EDEDED;
     background-image: 
@@ -27,7 +32,7 @@ body{
 
 .container-form {
     width: 80%;
-    margin: 1rem auto 5rem auto;
+    margin: 0 auto 3rem auto;
     padding: 1rem;
     font-size: 1.5rem;
     background-color: rgba(237,237,237,0.1);
@@ -38,6 +43,10 @@ form {
     display: grid;
     grid-template-columns: 60% 40%;
     grid-template-rows: repeat(2,1fr);
+}
+
+form.hidden{
+    display: none;
 }
 
 form .container-form-data{
@@ -113,8 +122,40 @@ input:focus {
 
 /*
 ----------------------------------
+            Instructions
+----------------------------------
+*/
+
+.instructions-container{
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    box-shadow: -2px 8px 38px -9px #EDEDED;
+    background-color: rgba(237,237,237,0.1);
+    text-align: center;
+}
+.instructions-container p,
+.instructions-container ul {
+    text-align: left;
+}
+.instructions-container ul{
+    text-align: left;
+}
+.instructions-container li{
+    margin: 0.5rem;
+}
+
+.instructions-container strong{
+    color: #990F02;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/*
+----------------------------------
             List of groups
----------------------------------
+----------------------------------
 */
 
 .container-list-groups{

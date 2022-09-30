@@ -7,7 +7,7 @@ use Dompdf\Dompdf;
 
 
 ob_start();
-require_once('index.php');
+require_once('list_groups.php');
 $html = ob_get_contents();
 ob_end_clean();
 // instantiate and use the dompdf class

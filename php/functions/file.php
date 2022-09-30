@@ -1,8 +1,8 @@
 <?php
 
-function getFileUploaded(){
+function getFileUploaded($uniqueID){
     if(isset($_POST) && !empty($_POST)){
-        
+
         if($_FILES["fileUploaded"]["error"] > 0){
             echo "Une erreur est survenue.";
             die;
@@ -22,5 +22,19 @@ function getFileUploaded(){
         if($fileExt !== $valideExtension){
             echo "Ce n'est pas un fichier json!";
         }
+
+        $tmpName = $_FILES["fileUploaded"]["tmp_name"];
+
+        $pathDownload = "../upload/" . $uniqueID . $fileExt;
+
+        $result = move_uploaded_file($tmpName, $pathDownload);
+        
+        if($result){
+            echo "Transfert terminé!";
+        }
+
+        // unlink($pathDownload);
+        return $pathDownload;
+
     }
 }

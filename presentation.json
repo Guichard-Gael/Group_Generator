@@ -1,0 +1,22 @@
+[
+    {
+        "actualLevel": "niveauPersonne1",
+        "prénom": "prenomPersonne1",
+        "nom": "nomPersonne1"
+    },
+    {
+        "actualLevel": "niveauPersonne2",
+        "prénom": "prenomPersonne2",
+        "nom": "nomPersonne2"
+    },
+    {
+        "actualLevel": "niveauPersonne3",
+        "prénom": "prenomPersonne3",
+        "nom": "nomPersonne3"
+    },
+    {
+        "actualLevel": "niveauPersonne4",
+        "prénom": "prenomPersonne4",
+        "nom": "nomPersonne4"
+    }
+]

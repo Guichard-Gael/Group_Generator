@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../css/reset.css"> -->
     <link rel="stylesheet" href="../css/style.css">
     <title>Générateur de groupes</title>
 </head>
 <body>
     <div class="container-form">
-        <a href="genpdf.php">Générer un PDF</a>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" action="list_groups.php" id="form" enctype="multipart/form-data">
+            
             <div class="container-form-group">
                 <label for="perGroup">Combien de personnes par groupe ?</label>
                 <input type="number" name="perGroup" id="perGroup">
@@ -24,32 +23,18 @@
             <button>Envoyer</button>
         </form>
     </div>
-    <section class="container-list-groups">
-        <?php
-            include('functions/groups.php');
-
-            $json = file_get_contents('../data.json');
-            $json2 = json_decode($json, true);
-            $numberGroup = intval($_POST["perGroup"]);
-            $students = groupGenerator($json2, $numberGroup);
-            
-            foreach($students as $index => $student):
-        ?>
-        <div class="container-group">
-            <div class="number-of-group"><p>Groupe <?= $index + 1 ?></p></div>
-            <?php
-                for ($index=0; $index < count($student); $index++):          
-            ?>
-            <p class="people"><?= $student[$index]['prénom']. " ". $student[$index]['nom'] ?></p>
-            <?php
-                endfor;
-            ?>
-        </div>
-        <?php
-            endforeach;
-        ?>
-    </section>
-
+    <div class="instructions-container">
+        <h1>Créer des groupes équilibrés rapidement!</h1>
+        <p>Pour que le générateur de groupe fonctionne normalement il faut :</p>
+        <ul>
+            <li>L'extension du fichier doit être "<strong>.json</strong>"</li>
+            <li>Organiser les données comme indiqué sur l'image ci-dessous</li>
+            <li>"actualLevel" / "prénom" / "nom" doivent être écrit <strong>exactement comme sur l'image</strong></li>
+        </ul>
+        <img src="../assets/images/structureFichierJSON.PNG" alt="Illustration de la structure attendue pour les données dans le fichier json">       
+    </div>
+    <script src="../js/form.js"></script>
+    <script src="../js/app.js"></script>
 </body>
 </html>
 

@@ -156,9 +156,9 @@ function calculMedian($listPeoples){
     // Dans le cas ou le nombre de valeur dans le tableau est pair
     if(count($listPeoples) % 2 === 0){
         // On prend comme indice la moitier de la longueur du tableau -1 (car un tableau commence à l'indice 0).
-        $middleValue = $listPeoples[(count($listPeoples) / 2) - 1]["actualLevel"];
+        $middleValue = intval($listPeoples[(count($listPeoples) / 2) - 1]["actualLevel"]);
         // On prend comme indice la moitier de la longueur du tableau.
-        $nextValueOfMiddle = $listPeoples[count($listPeoples) / 2]["actualLevel"];
+        $nextValueOfMiddle = intval($listPeoples[count($listPeoples) / 2]["actualLevel"]);
         // Moyenne des deux valeurs arondi à l'inférieur.
         $median = round(($middleValue + $nextValueOfMiddle) / 2, PHP_ROUND_HALF_DOWN);
 
