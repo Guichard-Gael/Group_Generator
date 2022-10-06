@@ -19,22 +19,19 @@ const groups = {
 
                 // Tri des données du tableau
                 groups.orderArray(data);
-
                 groups.sortPeople(groups.orderedPeopleArray);
 
                 // Les personnes au-dessus de la médiane sont dispatchées.
                 groups.dispatchPeoplesInGroup(groups.aboveMedian, numberGroupsNeeded, groups.getCookie('perGroup'));
+
                 // Les personnes en-dessous de la médiane sont dispatchées.
                 groups.dispatchPeoplesInGroup(groups.underMedian, numberGroupsNeeded, groups.getCookie('perGroup'));
+
                 // On complète les groupes avec le reste des personnes.
                 groups.dispatchPeoplesInGroup(groups.equalMedian, numberGroupsNeeded, groups.getCookie('perGroup'));
 
                 // On génère le code html nécessaire pour l'affichage des groupes
                 groups.createListGroupsElement(groups.listPeoplesGroups);
-
-                
-
-
             });
             
         }

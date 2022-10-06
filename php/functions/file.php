@@ -28,10 +28,6 @@ function getFileUploaded($uniqueID){
         $pathDownload = "../upload/" . $uniqueID . $fileExt;
 
         $result = move_uploaded_file($tmpName, $pathDownload);
-        
-        if($result){
-            echo "Transfert terminé!";
-        }
 
         // unlink($pathDownload);
         return $pathDownload;

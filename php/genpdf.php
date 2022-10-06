@@ -18,7 +18,7 @@ $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'landscape');
 
 // Render the HTML as PDF
-$dompdf->render();
+// $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream();
+// $dompdf->stream();
