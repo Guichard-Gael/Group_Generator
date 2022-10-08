@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <a href="#" class="generate-css">Générer un PDF</a>
+        <a href="#" class="generate-css" data-html2canvas-ignore>Générer un PDF</a>
     </header>
     <section class="container-list-groups">
         <?php
@@ -27,6 +27,8 @@
                     $json = file_get_contents(getFileUploaded($_COOKIE["fileID"]));
                     $json2 = json_decode($json, true);
                     $students = groupGenerator($json2, $numberGroup);
+                    
+
                 }
             }
         ?>

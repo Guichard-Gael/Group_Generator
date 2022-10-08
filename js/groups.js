@@ -6,6 +6,7 @@ const groups = {
     orderedPeopleArray: [],
     init: function () { 
         console.log("Initialisation de l'objet Groups");
+        console.log(document.body.offsetHeight);
         if(groups.getCookie('fileID') && groups.getCookie('perGroup')){
             console.log(document.cookie);
             fetch(`../upload/${groups.getCookie('fileID')}.json`)

@@ -254,3 +254,17 @@ input:focus {
     }
 }
 
+.screen {
+    width: 100%;
+    height: 100%;
+}
+
+
+body.screen {
+    background-image: none;
+    color: black;
+}
+
+body.screen .container-group{
+    box-shadow: none;
+}
