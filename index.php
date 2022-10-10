@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Générateur de groupes</title>
 </head>
 <body>
-    <div class="container-form">
-        <form method="POST" action="list_groups.php" id="form" enctype="multipart/form-data">
+    <header class="container-form">
+        <form method="POST" action="/php/list_groups.php" id="form" enctype="multipart/form-data">
             
             <div class="container-form-group">
                 <label for="perGroup">Combien de personnes par groupe ?</label>
@@ -22,7 +22,7 @@
             </div>
             <button>Envoyer</button>
         </form>
-    </div>
+    </header>
     <div class="instructions-container">
         <h1>Créer des groupes équilibrés rapidement!</h1>
         <p>Pour que le générateur de groupe fonctionne normalement il faut :</p>
@@ -33,22 +33,6 @@
         </ul>
         <img src="../assets/images/structureFichierJSON.PNG" alt="Illustration de la structure attendue pour les données dans le fichier json">       
     </div>
-    <script src="../js/form.js"></script>
-    <script src="../js/app.js"></script>
+    <script src="../assets/js/form.js"></script>
 </body>
 </html>
-
-<?php 
-
-
-// echo "<pre>";
-// var_dump($json2[0]["nom"]);
-// echo "<pre>";
-
-// $json = file_get_contents($_FILES["../data.json"]);
-// echo "<pre>";
-// var_dump(json_decode($json));
-// echo "<pre>";
-
-
-?>

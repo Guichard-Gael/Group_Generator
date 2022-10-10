@@ -7,20 +7,21 @@
  * @return array
  */
 function groupGenerator($arrayPeoples, $peoplesPerGroup){
-    // calculer la médiane du niveau des personnes (elle sera arrondi à l'inférieur pour éviter d'avoir une médiane à 5 si le niveau est élevé).
-    $medianPromo = calculMedian($arrayPeoples);
+
     $underMedian = [];
     $equalMedian = [];
     $aboveMedian = [];
-    $listPeoplesgroups = [];
+    
+    // calculer la médiane du niveau des personnes (elle sera arrondi à l'inférieur pour éviter d'avoir une médiane à 5 si le niveau est élevé).
+    $median = calculMedian($arrayPeoples);
 
-    // On catégorise les personnes en fonction de leurs niveau.
+    // On regroupe les personnes en fonction de leur niveau.
     for($index = 0; $index < count($arrayPeoples); $index++){
 
-        if($arrayPeoples[$index]["actualLevel"] > $medianPromo){
+        if($arrayPeoples[$index]["actualLevel"] > $median){
             $aboveMedian[] = $arrayPeoples[$index];
         }
-        elseif($arrayPeoples[$index]["actualLevel"] < $medianPromo){
+        elseif($arrayPeoples[$index]["actualLevel"] < $median){
             $underMedian[] = $arrayPeoples[$index];
         }
         else{
@@ -28,8 +29,9 @@ function groupGenerator($arrayPeoples, $peoplesPerGroup){
         }
     }
 
-    // Génère un nombre de groupe (arrondi au supérieur).
+    // Nombre de groupe (arrondi au supérieur).
     $numberGroupsNeeded = ceil(count($arrayPeoples) / $peoplesPerGroup);
+    // Création des groupes
     $listPeoplesgroups = createGroups($numberGroupsNeeded);
 
     // Les personnes au-dessus de la médiane sont dispatchées.
@@ -46,43 +48,46 @@ function groupGenerator($arrayPeoples, $peoplesPerGroup){
  * Créer le nombre de groupe nécessaire.
  *
  * @param int $numberOfGroup  Nombre de groupes à créer.
- * @return array
+ * @return array Tableau contenant autant de tableaux vides que de groupe nécessaire
 */
 function createGroups($numberOfGroup){
+
     $listOfGroups = [];
+
     for($index = 0; $index < $numberOfGroup; $index++){
-        ${'group'.($index+1)} = [];
-        $listOfGroups[] = ${'group'.($index+1)};
+        $listOfGroups[] = [];
     }
+
     return $listOfGroups;
 }
 
 /**
  * Dispatche aléatoirement les personnes d'une catégorie dans différents groupes.
  *
- * @param array $listGroups  Liste des groupes.
+ * @param array $listGroups  Tableau contenant les groupes à remplir.
  * @param array $category  Catégorie des personnes par rapport à la médiane.
- * @param int $numberGroupsNeeded  Nombre de groupe dont on a besoin.
+ * @param int $numberGroupsNeeded  Nombre de groupe nécessaire.
  * @param int $peoplesPerGroup  Nombre de personnes par groupe.
- * @return array
+ * @return array Tableau remplit avec les personnes de la catégorie
  */
 function dispatchPeoplesInGroup($listGroups, $category, $numberGroupsNeeded, $peoplesPerGroup){
-    // La boucle commence à "$groupToStart", il faut donc rajouter "$groupToStart" à count($category) pour parcourir tout le tableau.
-    while(!empty($category)){
-        // Initialisation de la boucle à l'index "0". Permettra par la suite de ne pas boucler sur les groupes qui sont déjà pleins.
-        $groupToStart = 0;
 
-        // S'il ne reste plus assez de personnes, alors on modifie le nombre de groupe que l'on veut par le nombre d'élèves restant pour pouvoir exécuter la boucle "for".
+    // Initialisation de la boucle à l'index "0". Permettra par la suite de ne pas boucler sur les groupes qui sont déjà pleins.
+    $groupToStart = 0;
+    while(!empty($category)){
+
+        // S'il ne reste plus assez de personnes, alors on modifie le nombre de groupe que l'on veut par le nombre de personnes restantes pour pouvoir exécuter la boucle "for".
         if($numberGroupsNeeded > count($category)){
             $numberGroupsNeeded = count($category);
         }
         
+        // La boucle commence à "$groupToStart", il faut donc rajouter "$groupToStart" à count($category) pour parcourir tout le tableau.
         for ($people = $groupToStart; $people < ($numberGroupsNeeded + $groupToStart); $people++) {
 
             // On vérifie si le nombre de personnes dans le groupe est inférieur au nombre maximal que l'on veut par groupe.
             if(count($listGroups[$people]) < $peoplesPerGroup){
 
-                // Choix aléatoire de l'indince.
+                // Choix aléatoire de l'indice.
                 $indexRandomPeople = array_rand($category, 1);
                 //Ajout dans un groupe.
                 $listGroups[$people][] = $category[$indexRandomPeople];
@@ -90,6 +95,8 @@ function dispatchPeoplesInGroup($listGroups, $category, $numberGroupsNeeded, $pe
                 array_splice($category, $indexRandomPeople, 1);
             }
             else{
+                
+                // On modifie groupToStart pour ne pas reboucler sur les groupes déjà pleins
                 $groupToStart = $people + 1;
             }
         }
@@ -104,15 +111,14 @@ function dispatchPeoplesInGroup($listGroups, $category, $numberGroupsNeeded, $pe
  * @param array $arrayToCheck  Tableau à ordonner.
  * @return bool
  */
-function checkOrderArray($arrayToCheck){
+function isOrderArray($arrayToCheck){
     // Comparaison d'une valeur avec celle qui la précède. Empêche la boucle de sortir du tableau. Il faut donc commencer à l'indice 1.
     for($index = 1; $index < count($arrayToCheck); $index++){
         // Variable qui récupère l'élément à l'indice précédent pour comparer les deux valeurs.
         $previousElement = $arrayToCheck[$index - 1]["actualLevel"];
-        if ($previousElement < $arrayToCheck[$index]["actualLevel"]) {
-            $previousElement = $arrayToCheck[$index];
-        }
-        else{
+        // Si la valeur précédente est plus grande que la valeur actuelle
+        if ($previousElement > $arrayToCheck[$index]["actualLevel"]) {
+            
             // Le tableau n'est pas ordonné.
             return false;
         }
@@ -127,9 +133,9 @@ function checkOrderArray($arrayToCheck){
  * @param array $arrayToOrder Tableau à ordonner.
  * @return array
  */
-function toOrderArray($arrayToOrder){
+function orderArray($arrayToOrder){
 
-    while(!checkOrderArray($arrayToOrder)){
+    while(!isOrderArray($arrayToOrder)){
 
         // Comparaison d'une valeur avec celle qui la précède. Empêche la boucle de sortir du tableau. Il faut donc commencer à l'indice 1.
         for($index = 1; $index < count($arrayToOrder); $index++){
@@ -153,21 +159,24 @@ function toOrderArray($arrayToOrder){
  * @return float
  */
 function calculMedian($listPeoples){
+
+    // Tri les données du tableau en ordre croissant en fonction du niveau des personnes
+    $listPeoplesOrdered = orderArray($listPeoples);
+
     // Dans le cas ou le nombre de valeur dans le tableau est pair
-    if(count($listPeoples) % 2 === 0){
+    if(count($listPeoplesOrdered) % 2 === 0){
         // On prend comme indice la moitier de la longueur du tableau -1 (car un tableau commence à l'indice 0).
-        $middleValue = intval($listPeoples[(count($listPeoples) / 2) - 1]["actualLevel"]);
+        $middleValue = intval($listPeoplesOrdered[(count($listPeoplesOrdered) / 2) - 1]["actualLevel"]);
         // On prend comme indice la moitier de la longueur du tableau.
-        $nextValueOfMiddle = intval($listPeoples[count($listPeoples) / 2]["actualLevel"]);
+        $nextValueOfMiddle = intval($listPeoplesOrdered[count($listPeoplesOrdered) / 2]["actualLevel"]);
         // Moyenne des deux valeurs arondi à l'inférieur.
         $median = round(($middleValue + $nextValueOfMiddle) / 2, PHP_ROUND_HALF_DOWN);
 
-        return $median;
     }
     else{
         // Indice valeur de la moitier du tableau = (longueur tableau + 1) / 2. On soustrait -1  à la fin car un tableau commence à l'indice 0.
-        $median = round($listPeoples[((count($listPeoples) + 1) / 2) - 1]["actualLevel"], PHP_ROUND_HALF_DOWN);
-        return $median;
+        $median = round($listPeoplesOrdered[((count($listPeoplesOrdered) + 1) / 2) - 1]["actualLevel"], PHP_ROUND_HALF_DOWN);
     }
+    return $median;
 }
 

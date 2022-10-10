@@ -1,6 +1,6 @@
 <?php
 
-function getFileUploaded($uniqueID){
+function getFileUploaded(){
     if(isset($_POST) && !empty($_POST)){
 
         if($_FILES["fileUploaded"]["error"] > 0){
@@ -8,7 +8,7 @@ function getFileUploaded($uniqueID){
             die;
         }
         
-        $maxFileSize = 1000000;
+        $maxFileSize = 100000;
         $fileSize = $_FILES["fileUploaded"]["size"];
         
         if($fileSize > $maxFileSize){
@@ -24,13 +24,15 @@ function getFileUploaded($uniqueID){
         }
 
         $tmpName = $_FILES["fileUploaded"]["tmp_name"];
+        // $uniqueID = md5(uniqid(rand(), true));
+        
 
-        $pathDownload = "../upload/" . $uniqueID . $fileExt;
+        // $pathDownload = "../upload/" . $uniqueID . $fileExt;
 
-        $result = move_uploaded_file($tmpName, $pathDownload);
+        // move_uploaded_file($tmpName, $pathDownload);
 
         // unlink($pathDownload);
-        return $pathDownload;
+        return $tmpName;
 
     }
 }

@@ -123,7 +123,6 @@ const groups = {
 
         // Calcul de la médiane
         const median = groups.calculMedian(arrayPeoples)
-        console.log(median);
         // On dispatche les personnes en fonction de leur niveau.
         for(let index = 0; index < arrayPeoples.length; index++){
             
@@ -162,7 +161,7 @@ const groups = {
                 // On vérifie si le nombre de personnes dans le groupe est inférieur au nombre maximal que l'on veut par groupe.
                 if(groups.listPeoplesGroups[people].length < peoplesPerGroup){
 
-                    // Choix aléatoire de l'indince.
+                    // Choix aléatoire de l'indice.
                     let randomIndex = Math.floor(Math.random() * category.length);
                     //Ajout dans un groupe.
                     groups.listPeoplesGroups[people].push(category[randomIndex]);
@@ -180,7 +179,7 @@ const groups = {
      * Créer le nombre de groupe nécessaire.
      * 
      * @param {integer} numberOfGroup Nombre de groupes à créer.
-     * @returns {array} Un tableau vide avec autant de tableaux vides que de groupe necessaire
+     * @returns {array} Tableau contenant autant de tableaux vides que de groupe nécessaire
      */
     createGroups: function(numberOfGroup){
         for(let index = 0; index < numberOfGroup; index++){
