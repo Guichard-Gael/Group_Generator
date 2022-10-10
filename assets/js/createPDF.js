@@ -1,7 +1,7 @@
 
 const createPDF = {
     init: function () { 
-        const linkGeneratePDF = document.querySelector('.generate-css');
+        const linkGeneratePDF = document.querySelector('.generate-pdf');
         linkGeneratePDF.addEventListener('click', createPDF.handleCreationPDF);
     },
     /**
@@ -50,7 +50,7 @@ const createPDF = {
         let positionY = 0; 
 
         // Ajout d'une portion de l'image au PDF
-        newPDF.addImage(imgListGroups, 'JPEG', 0, positionY, imgWidth, imgHeight, 'SLOW');
+        newPDF.addImage(imgListGroups, 'JPEG', 0, positionY, imgWidth, imgHeight, 'FAST');
         heightLeft -= pageHeight;
 
         // Partie suppérieur de l'image à ne pas afficher
@@ -63,7 +63,7 @@ const createPDF = {
             // Nouvelle page au PDF
             newPDF.addPage();
             // Ajout d'une nouvelle portion de l'image à la nouvelle page
-            newPDF.addImage(imgListGroups, 'JPEG', 0, positionY, imgWidth, imgHeight, 'SLOW');
+            newPDF.addImage(imgListGroups, 'JPEG', 0, positionY, imgWidth, imgHeight, 'FAST');
             // Savoir si le bas de l'image à été atteint
             heightLeft -= pageHeight;
         }

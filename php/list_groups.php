@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="#" class="generate-css" data-html2canvas-ignore>Générer un PDF</a>
+        <a href="#" class="generate-pdf" data-html2canvas-ignore>Générer un PDF</a>
     </header>
     <section class="container-list-groups">
         <?php

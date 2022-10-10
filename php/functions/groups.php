@@ -72,6 +72,8 @@ function createGroups($numberOfGroup){
  */
 function dispatchPeoplesInGroup($listGroups, $category, $numberGroupsNeeded, $peoplesPerGroup){
 
+    // Contrôle pour que la boucle "for" ne sorte jamais du tableau
+    $limitMax = $numberGroupsNeeded;
     // Initialisation de la boucle à l'index "0". Permettra par la suite de ne pas boucler sur les groupes qui sont déjà pleins.
     $groupToStart = 0;
     while(!empty($category)){
@@ -81,9 +83,16 @@ function dispatchPeoplesInGroup($listGroups, $category, $numberGroupsNeeded, $pe
             $numberGroupsNeeded = count($category);
         }
         
-        // La boucle commence à "$groupToStart", il faut donc rajouter "$groupToStart" à count($category) pour parcourir tout le tableau.
-        for ($people = $groupToStart; $people < ($numberGroupsNeeded + $groupToStart); $people++) {
+        $maxLoops = $numberGroupsNeeded + $groupToStart;
 
+        // Si la condition d'arrêt dépasse le nombre maximum de groupes
+        if ($maxLoops > $limitMax) {
+            // La condition d'arrêt devient le maximum de groupes
+            $maxLoops  = $limitMax;
+        }
+        // La boucle commence à "$groupToStart", il faut donc rajouter "$groupToStart" à count($category) pour parcourir tout le tableau.
+        for ($people = $groupToStart; $people < $maxLoops; $people++) {
+            
             // On vérifie si le nombre de personnes dans le groupe est inférieur au nombre maximal que l'on veut par groupe.
             if(count($listGroups[$people]) < $peoplesPerGroup){
 
@@ -177,6 +186,7 @@ function calculMedian($listPeoples){
         // Indice valeur de la moitier du tableau = (longueur tableau + 1) / 2. On soustrait -1  à la fin car un tableau commence à l'indice 0.
         $median = round($listPeoplesOrdered[((count($listPeoplesOrdered) + 1) / 2) - 1]["actualLevel"], PHP_ROUND_HALF_DOWN);
     }
+
     return $median;
 }
 

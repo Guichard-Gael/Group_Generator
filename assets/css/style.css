@@ -24,13 +24,7 @@ body{
     background-attachment: fixed;
 }
 
-/*
-----------------------------------
-            Form
----------------------------------
-*/
-
-.container-form {
+header {
     width: 80%;
     margin: 0 auto 3rem auto;
     padding: 1rem;
@@ -39,6 +33,12 @@ body{
     border-radius: 0.2rem;
     box-shadow: -2px 8px 38px -9px #EDEDED;
 }
+/*
+----------------------------------
+            Form
+---------------------------------
+*/
+
 form {
     display: grid;
     grid-template-columns: 60% 40%;
@@ -151,6 +151,19 @@ input:focus {
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+/*
+----------------------------------
+            PDF link
+----------------------------------
+*/
+
+header .generate-pdf {
+    text-decoration: none;
+    color: #990F02;
+}
+
+
 
 /*
 ----------------------------------

@@ -8,7 +8,7 @@ function getFileUploaded(){
             die;
         }
         
-        $maxFileSize = 100000;
+        $maxFileSize = 1000000;
         $fileSize = $_FILES["fileUploaded"]["size"];
         
         if($fileSize > $maxFileSize){
