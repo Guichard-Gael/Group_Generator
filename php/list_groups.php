@@ -8,8 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-    <header>
+    <header class="container-download">
         <a href="#" class="generate-pdf" data-html2canvas-ignore>Générer un PDF</a>
+        <div class="download-bar">
+            <div class="download-animation"></div>
+            <p class="placeholder">Barre de téléchargement</p>
+        </div>
     </header>
     <section class="container-list-groups">
         <?php

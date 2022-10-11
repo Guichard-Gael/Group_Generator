@@ -157,10 +157,60 @@ input:focus {
             PDF link
 ----------------------------------
 */
+.container-download {
+    display: flex;
+    justify-content: space-around;
+}
 
 header .generate-pdf {
     text-decoration: none;
     color: #990F02;
+}
+header .generate-pdf.download {
+    text-decoration: none;
+    color: green;
+}
+
+.download-bar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    overflow: hidden;
+    border-radius: 0.2rem;
+    background-color: #EDEDED;
+}
+
+.download-bar .placeholder {
+    margin: 0;
+    color: red;
+    font-size: 1rem;
+}
+
+.download-bar .download-animation {
+    position: absolute;
+    left: -30%;
+    width: 30%;
+    height: 100%;
+    background-color: #990F02;
+}
+
+.download-bar .download-animation.active + .placeholder{
+    display: none;
+}
+.download-bar .download-animation.active {
+    animation: download 1s infinite;
+}
+
+@keyframes download {
+    0% {
+        left: -30%;
+    }
+
+    100% {
+        left: 130%;
+    }
 }
 
 
