@@ -1,10 +1,10 @@
 
 const createPDF = {
-    link: {},
+    progressBar: {},
     init: function () { 
         const linkGeneratePDF = document.querySelector('.generate-pdf');
         linkGeneratePDF.addEventListener('click', createPDF.handleCreationPDF);
-        createPDF.link = document.querySelector('.download-animation');
+        createPDF.progressBar = document.querySelector('.download-animation');
     },
     /**
      * Déclenche la création du PDF
@@ -12,7 +12,7 @@ const createPDF = {
      */
     handleCreationPDF: function(event){
         event.preventDefault();
-        createPDF.link.classList.add('active');
+        createPDF.progressBar.classList.add('active');
         // Modifie le style de la page avant la création du PDF
         document.body.classList.add('screen');
 
@@ -72,7 +72,7 @@ const createPDF = {
         
         // Téléchargement du PDF par l'utilisateur
         newPDF.save( 'list_groups.pdf');
-        createPDF.link.classList.remove('active');
+        createPDF.progressBar.classList.remove('active');
     }
 }
 document.addEventListener("DOMContentLoaded", createPDF.init());

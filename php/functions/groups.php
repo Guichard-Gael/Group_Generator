@@ -145,7 +145,6 @@ function isOrderArray($arrayToCheck){
 function orderArray($arrayToOrder){
 
     while(!isOrderArray($arrayToOrder)){
-
         // Comparaison d'une valeur avec celle qui la précède. Empêche la boucle de sortir du tableau. Il faut donc commencer à l'indice 1.
         for($index = 1; $index < count($arrayToOrder); $index++){
             // Variable qui récupère l'élément à l'indice précédent pour comparer les deux valeurs. Sert aussi de stockage temporaire pour intervertir les deux valeurs si l'ordre n'est pas correcte.
@@ -189,4 +188,3 @@ function calculMedian($listPeoples){
 
     return $median;
 }
-

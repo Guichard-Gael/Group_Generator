@@ -25,6 +25,7 @@ body{
 }
 
 header {
+    position: relative;
     width: 80%;
     margin: 0 auto 3rem auto;
     padding: 1rem;
@@ -32,6 +33,34 @@ header {
     background-color: rgba(237,237,237,0.1);
     border-radius: 0.2rem;
     box-shadow: -2px 8px 38px -9px #EDEDED;
+}
+
+header .back-to-home {
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    transform: translate(0%, -50%);
+    width: 2.5rem;
+    /* couleur du SVG */
+    filter: invert(100%) sepia(57%) saturate(0%) hue-rotate(216deg) brightness(111%) contrast(100%);
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+header .back-to-home:hover {
+    animation: svgColor 1s forwards;
+}
+@keyframes svgColor {
+    0% {
+        filter: invert(100%) sepia(57%) saturate(0%) hue-rotate(216deg) brightness(111%) contrast(100%);
+    }
+
+    1% {
+        filter: invert(9%) sepia(79%) saturate(0%) hue-rotate(17deg) brightness(92%) contrast(104%);
+    }
+    100% {
+        filter: invert(9%) sepia(79%) saturate(6503%) hue-rotate(17deg) brightness(92%) contrast(104%);
+    }
 }
 /*
 ----------------------------------
@@ -139,9 +168,11 @@ input:focus {
 .instructions-container ul {
     text-align: left;
 }
+
 .instructions-container ul{
     text-align: left;
 }
+
 .instructions-container li{
     margin: 0.5rem;
 }
@@ -152,9 +183,16 @@ input:focus {
     font-size: 1.1rem;
 }
 
+.container-img {
+    width: 35%;
+    margin: 0 auto;
+}
+.container-img img {
+    width: 100%;
+}
 /*
 ----------------------------------
-            PDF link
+              PDF
 ----------------------------------
 */
 .container-download {
@@ -213,7 +251,26 @@ header .generate-pdf.download {
     }
 }
 
+/*
+----------------------------------
+            Screen shot
+---------------------------------
+*/
 
+.screen {
+    width: 100%;
+    height: 100%;
+}
+
+
+body.screen {
+    background-image: none;
+    color: black;
+}
+
+body.screen .container-group{
+    box-shadow: none;
+}
 
 /*
 ----------------------------------
@@ -243,6 +300,40 @@ header .generate-pdf.download {
 
 /*
 ----------------------------------
+              Error
+---------------------------------
+*/
+
+.container-error {
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.2rem;
+    box-shadow: -2px 8px 38px 10px #990F02;
+    background-color: rgba(237,237,237,0.1);
+    padding: 2rem;
+    font-weight: bold;
+}
+
+.container-error .back-to-home {
+    position: relative;
+    color: #990F02;
+    text-decoration: none;
+    background-color: #FFF;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 1rem;
+}
+
+.container-error .back-to-home:hover {
+    background-color: #990F02;
+    color: #FFF;
+    transition: background-color 1.5s, color 1s; 
+}
+/*
+----------------------------------
             Media query
 ---------------------------------
 */
@@ -269,6 +360,11 @@ header .generate-pdf.download {
 
     .container-group{
         width: 45%;
+    }
+
+    .container-img {
+        width: 80%;
+        margin: 0 auto;
     }
 }
 
@@ -312,22 +408,24 @@ header .generate-pdf.download {
         width: 80%;
     }
 
+    header .back-to-home {
+        left: 1rem;
+        top: 10px;
+        transform: translate(0%,0%);
+    }
+
     .container-group{
         width: 90%;
     }
-}
 
-.screen {
-    width: 100%;
-    height: 100%;
-}
-
-
-body.screen {
-    background-image: none;
-    color: black;
-}
-
-body.screen .container-group{
-    box-shadow: none;
+    .container-download {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .download-bar {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+    }
 }
